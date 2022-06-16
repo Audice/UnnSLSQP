@@ -88,8 +88,8 @@ int main() {
 
 
     std::vector<double> x(2);
-    x[0] = 1.5; x[1] = 0.5;
-    //x[0] = 4; x[1] = 3;
+    //x[0] = 1.5; x[1] = 0.5;
+    x[0] = 4; x[1] = 3;
     double minf;
 
     try {

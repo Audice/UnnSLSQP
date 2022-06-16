@@ -257,7 +257,7 @@ char* LocalOptHelper::nlopt_vsprintf(char* p, const char* format, va_list ap)
 
 void LocalOptHelper::nlopt_stop_msg(const nlopt_stopping* s, const char* format, ...)
 {
-    va_list ap = NULL;
+    va_list ap;
     if (s->stop_msg) {
         va_start(ap, format);
         *(s->stop_msg) = nlopt_vsprintf(*(s->stop_msg), format, ap);
