@@ -267,22 +267,20 @@ nlopt_result opt::nlopt_set_upper_bounds(nlopt_opt opt, const double* ub)
     return NLOPT_INVALID_ARGS;
 }
 
-
-void opt::set_xtol_rel(const double* xtol_rel) {
-    nlopt_set_xtol_rel(o, xtol_rel);
+//Остановка по числу итераций
+void opt::set_maxeval(const int maxeval) {
+    if (maxeval > 0)
+        o->maxeval = maxeval;
 }
 
-nlopt_result opt::nlopt_set_xtol_rel(nlopt_opt opt, const double* xtol_rel)
-{
-    if (opt) {
-        opt->xtol_rel = *xtol_rel;
+
+nlopt_result opt::set_xtol_rel(const double xtol_rel) {
+    if (o) {
+        o->xtol_rel = xtol_rel;
         return NLOPT_SUCCESS;
     }
     return NLOPT_INVALID_ARGS;
 }
-
-
-
 
 
 void opt::set_xtol_abs(const double* xtol_abs) {

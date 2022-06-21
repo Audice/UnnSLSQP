@@ -8,6 +8,7 @@
 #include "stronginc3_problem.h"
 #include "slsqp.h"
 #include "opt.h"
+#include "General_SLSQP_Solver.h"
 //#include "opt.h"
 
 
@@ -47,10 +48,6 @@ void FiniteGradient(const std::vector<double>& x, std::vector<double>& grad, std
     }
 }
 
-typedef struct {
-    double a, b;
-} my_constraint_data;
-
 
 template <double(*F)(const std::vector<double>&)>
 double myvconstraint(const std::vector<double>& x, std::vector<double>& grad, void* data)
@@ -59,19 +56,28 @@ double myvconstraint(const std::vector<double>& x, std::vector<double>& grad, vo
     return F(x);
 }
 
-
-
 template <int N>
 constexpr inline auto Func = myvconstraint<InConstr<N>>;
 
 
 int main() {
-    opt opt1("LD_SLSQP", 2);
     std::vector<double> lb(2);
     //lb[0] = -HUGE_VAL; lb[1] = 0;
     lb[0] = 0; lb[1] = -1.;
     std::vector<double> ub(2);
     ub[0] = 4.0; ub[1] = 3.0;
+
+    TStronginC3Problem stPr;
+    General_SLSQP_Solver slsqp_solver(2, &stPr, lb, ub, 1e-5);
+
+    std::vector<double> x(2);
+    x[0] = 1.5; x[1] = 0.5;
+    //x[0] = 4; x[1] = 3;
+
+    slsqp_solver.Solve(x);
+
+    /*
+    opt opt1("LD_SLSQP", 2);
 
     opt1.set_lower_bounds(lb);
     opt1.set_upper_bounds(ub);
@@ -82,14 +88,15 @@ int main() {
     opt1.add_inequality_constraint(Func<0>, &data[0], 1e-6);
     opt1.add_inequality_constraint(Func<1>, &data[0], 1e-6);
     opt1.add_inequality_constraint(Func<2>, &data[1], 1e-6);
-    double* xtol = new double(1e-5);
+    
 
-    opt1.set_xtol_rel(xtol);
+    opt1.set_xtol_rel(1e-5);
+
 
 
     std::vector<double> x(2);
-    //x[0] = 1.5; x[1] = 0.5;
-    x[0] = 4; x[1] = 3;
+    x[0] = 1.5; x[1] = 0.5;
+    //x[0] = 4; x[1] = 3;
     double minf;
 
     try {
@@ -102,6 +109,8 @@ int main() {
         std::cerr << "nlopt failed: " << e.what() << std::endl;
         return EXIT_FAILURE;
     }
+
+    */
 
     
     

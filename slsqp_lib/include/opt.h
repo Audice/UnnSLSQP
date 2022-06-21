@@ -324,7 +324,7 @@
         nlopt_result nlopt_set_upper_bounds(nlopt_opt opt, const double* ub);
 
 
-        void set_xtol_rel(const double* xtol_rel);
+        nlopt_result set_xtol_rel(const double xtol_rel);
 
         void set_xtol_abs(const double* xtol_abs);
 
@@ -345,6 +345,8 @@
         void nlopt_set_munge(nlopt_opt opt, nlopt_munge munge_on_destroy, nlopt_munge munge_on_copy);
 
         void nlopt_destroy(nlopt_opt opt);
+
+        void set_maxeval(const int maxeval);
 
 
         /*
